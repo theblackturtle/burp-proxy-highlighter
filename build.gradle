@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+targetCompatibility = 17
+sourceCompatibility = 17
+
+group 'proxyhighlighter'
+version '1.0.0'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files('lib/montoya-api-1.0.0.jar')
+}
+
+
+task fatJar(type: Jar) {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    baseName = project.name
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
